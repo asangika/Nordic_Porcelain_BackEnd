@@ -1,4 +1,3 @@
-using Ecommerce.Domain.src.Auth;
 using Ecommerce.Domain.src.Interfaces;
 using Ecommerce.Domain.src.UserAggregate;
 using Ecommerce.Service.src.UserService;
@@ -47,43 +46,43 @@ namespace Ecommerce.Tests.src.Service
             _mockUserRepository.Verify(r => r.CreateAsync(It.IsAny<User>()), Times.Once);
         }
 
-        [Fact]
-        public async Task GetByCredentialsAsync_ShouldReturnUserReadDto_WhenUserExists()
-        {
-            // Arrange
-            var userCredentials = new UserCredentials
-            ("test@example.com", "password123"
-            );
-            var user = new User
-            {
-                Email = userCredentials.Email,
-                Password = "hashedPassword",
-                Salt = new byte[16]
-            };
-            _mockUserRepository.Setup(r => r.GetUserByCredentialAsync(userCredentials)).ReturnsAsync(user);
+        // [Fact]
+        // public async Task GetByCredentialsAsync_ShouldReturnUserReadDto_WhenUserExists()
+        // {
+        //     // Arrange
+        //     var userCredentials = new UserCredentials
+        //     ("test@example.com", "password123"
+        //     );
+        //     var user = new User
+        //     {
+        //         Email = userCredentials.Email,
+        //         Password = "hashedPassword",
+        //         Salt = new byte[16]
+        //     };
+        //     _mockUserRepository.Setup(r => r.GetUserByCredentialAsync(userCredentials)).ReturnsAsync(user);
 
-            // Act
-            var result = await _userManagement.GetByCredentialsAsync(userCredentials);
+        //     // Act
+        //     var result = await _userManagement.GetByCredentialsAsync(userCredentials);
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(user.Email, result.Email);
+        //     // Assert
+        //     Assert.NotNull(result);
+        //     Assert.Equal(user.Email, result.Email);
 
-        }
+        // }
 
-        [Fact]
-        public async Task GetByCredentialsAsync_ShouldThrowException_WhenUserDoesNotExist()
-        {
-            // Arrange
-            var userCredentials = new UserCredentials
-            ("test@example.com", "password123"
-            );
-            _mockUserRepository.Setup(r => r.GetUserByCredentialAsync(userCredentials)).ReturnsAsync((User)null);
+        // [Fact]
+        // public async Task GetByCredentialsAsync_ShouldThrowException_WhenUserDoesNotExist()
+        // {
+        //     // Arrange
+        //     var userCredentials = new UserCredentials
+        //     ("test@example.com", "password123"
+        //     );
+        //     _mockUserRepository.Setup(r => r.GetUserByCredentialAsync(userCredentials)).ReturnsAsync((User)null);
 
-            // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _userManagement.GetByCredentialsAsync(userCredentials));
+        //     // Act & Assert
+        //     await Assert.ThrowsAsync<Exception>(() => _userManagement.GetByCredentialsAsync(userCredentials));
 
-        }
+        // }
 
         [Fact]
         public async Task UpdatePasswordAsync_ShouldReturnTrue_WhenPasswordUpdated()

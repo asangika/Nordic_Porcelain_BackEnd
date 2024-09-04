@@ -11,6 +11,7 @@ using Ecommerce.Infrastructure.src.Repository.Service;
 using Ecommerce.Service.src.UserService;
 using Newtonsoft.Json.Converters;
 using Microsoft.OpenApi.Models;
+using Ecommerce.Presentation.src.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,7 +76,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductColorRepository, ProductColorRepository>();
 builder.Services.AddScoped<IProductSizeRepository, ProductSizeRepository>();
 builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
-//builder.Services.AddScoped<ExceptionHandlerMiddleware>();
+builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthManagement, AuthManagement>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -109,13 +110,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
 
 // Inject middleware to the application
 
 app.UseHttpsRedirection();
-//app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Moq;
-using Xunit;
 using Ecommerce.Domain.src.CategoryAggregate;
 using Ecommerce.Domain.src.Interfaces;
 using Ecommerce.Service.src.CategoryService;

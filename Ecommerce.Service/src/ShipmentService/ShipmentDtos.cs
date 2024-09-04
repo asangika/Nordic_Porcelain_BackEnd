@@ -9,6 +9,7 @@ namespace Ecommerce.Service.src.ShipmentService
 
         public Guid OrderId { get; set; }
         public Guid AddressId { get; set; }
+        public String? TrackingNumber { get; set; }
 
         public override void FromEntity(Shipment entity)
         {
@@ -16,6 +17,7 @@ namespace Ecommerce.Service.src.ShipmentService
             ShipmentDate = entity.ShipmentDate;
             OrderId = entity.Order.Id;
             AddressId = entity.Address.Id;
+            TrackingNumber = entity.TrackingNumber;
         }
     }
     public class ShipmentCreateDto : ICreateDto<Shipment>

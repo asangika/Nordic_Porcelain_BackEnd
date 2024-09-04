@@ -8,80 +8,12 @@ namespace Ecommerce.Service.src.ProductService
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IOrderItemRepository _orderItemRepository;
 
-        public ProductManagement(IProductRepository productRepository, ICategoryRepository categoryRepository, IOrderItemRepository orderItemRepository) : base(productRepository)
+        public ProductManagement(IProductRepository productRepository, ICategoryRepository categoryRepository) : base(productRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
-            _orderItemRepository = orderItemRepository;
         }
-        /* public async Task<Product> CreateAsync(ProductCreateDto productCreateDto)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(productCreateDto.Title))
-                    throw new ArgumentException("Product title is required.");
-
-                if (string.IsNullOrWhiteSpace(productCreateDto.Description))
-                    throw new ArgumentException("Product description is required.");
-
-                if (productCreateDto.Price <= 0)
-                    throw new ArgumentException("Product price must be positive.");
-
-                if (productCreateDto.Stock < 0)
-                    throw new ArgumentException("Product stock cannot be negative.");
-
-                var category = await _categoryRepository.GetAsync(c => c.Id == productCreateDto.CategoryId);
-                if (category == null)
-                    throw new ArgumentException("Invalid category.");
-
-                var product = productCreateDto.CreateEntity();
-
-                return await _productRepository.CreateAsync(product);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error creating product!");
-            }
-
-        } */
-
-        /* public async Task<bool> UpdateAsync(Guid productId, ProductUpdateDto productUpdateDto)
-        {
-            try
-            {
-                var existingProduct = await _productRepository.GetAsync(p => p.Id == productId);
-
-                if (existingProduct == null)
-                    throw new ArgumentException("Product not found.");
-
-                if (string.IsNullOrWhiteSpace(productUpdateDto.Title))
-                    throw new ArgumentException("Product title is required.");
-
-                if (string.IsNullOrWhiteSpace(productUpdateDto.Description))
-                    throw new ArgumentException("Product description is required.");
-
-                if (productUpdateDto.Price <= 0)
-                    throw new ArgumentException("Product price must be positive.");
-
-                if (productUpdateDto.Stock < 0)
-                    throw new ArgumentException("Product stock cannot be negative.");
-
-                var category = await _categoryRepository.GetAsync(c => c.Id == productUpdateDto.CategoryId);
-                if (category == null)
-                    throw new ArgumentException("Invalid category.");
-
-                var productToUpdate = productUpdateDto.UpdateEntity(existingProduct);
-
-                return await _productRepository.UpdateByIdAsync(productToUpdate);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Error Updating Product!.");
-            }
-
-        } */
 
         public async Task<IEnumerable<ProductReadDto>> GetProductsByCategoryAsync(Guid categoryId)
         {

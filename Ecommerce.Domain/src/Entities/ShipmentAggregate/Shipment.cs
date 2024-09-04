@@ -11,6 +11,7 @@ namespace Ecommerce.Domain.src.Entities.ShipmentAggregate
         public Guid OrderId { get; set; }
         public Guid AddressId { get; set; }
         public ShippingStatus ShipmentStatus { get; set; }
+        public String? TrackingNumber { get; set; }
 
         // Navigation properties
         public Order? Order { get; set; }
