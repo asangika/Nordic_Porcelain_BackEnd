@@ -1,3 +1,5 @@
+using Ecommerce.Domain.src.AddressAggregate;
+using Ecommerce.Domain.src.Entities.OrderAggregate;
 using Ecommerce.Domain.src.Entities.ShipmentAggregate;
 using Ecommerce.Domain.src.Interfaces;
 using Ecommerce.Service.src.ShipmentService;
@@ -20,11 +22,16 @@ namespace Ecommerce.Tests.src.Service
         {
             // Arrange
             var orderId = Guid.NewGuid();
-            var addressId = Guid.NewGuid();
             var shipments = new List<Shipment>
             {
-                new Shipment { Id = Guid.NewGuid(), OrderId = orderId, TrackingNumber = "TRACK123", ShipmentDate = DateTime.UtcNow, AddressId =  addressId},
-                new Shipment { Id = Guid.NewGuid(), OrderId = orderId, TrackingNumber = "TRACK456", ShipmentDate = DateTime.UtcNow, AddressId =  addressId }
+                new Shipment
+                {
+                    Id = Guid.NewGuid(),
+                    ShipmentDate = DateTime.UtcNow,
+                    Order = new Order { Id = orderId },
+                    Address = new Address { Id = Guid.NewGuid() },
+                    TrackingNumber = "TRACK123"
+                }
             };
 
             _mockShipmentRepository.Setup(repo => repo.GetShipmentsByOrderIdAsync(orderId))
@@ -35,7 +42,7 @@ namespace Ecommerce.Tests.src.Service
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
+            Assert.Equal(1, result.Count());
             Assert.Equal("TRACK123", result.First().TrackingNumber);
         }
 

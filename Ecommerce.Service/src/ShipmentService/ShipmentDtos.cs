@@ -7,17 +7,19 @@ namespace Ecommerce.Service.src.ShipmentService
     {
         public DateTime ShipmentDate { get; set; }
 
-        public Guid OrderId { get; set; }
-        public Guid AddressId { get; set; }
+        public Guid? OrderId { get; set; }
+        public Guid? AddressId { get; set; }
         public String? TrackingNumber { get; set; }
 
         public override void FromEntity(Shipment entity)
         {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
             base.FromEntity(entity);
             ShipmentDate = entity.ShipmentDate;
-            OrderId = entity.Order.Id;
-            AddressId = entity.Address.Id;
-            TrackingNumber = entity.TrackingNumber;
+            OrderId = entity.Order?.Id ?? throw new Exception("Order is missing");
+            AddressId = entity.Address?.Id ?? throw new Exception("Address is missing");
+            TrackingNumber = entity.TrackingNumber ?? string.Empty;
         }
     }
     public class ShipmentCreateDto : ICreateDto<Shipment>
