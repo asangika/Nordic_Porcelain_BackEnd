@@ -12,7 +12,6 @@ namespace Ecommerce.Service.src.OrderService
         public decimal TotalPrice { get; set; }
         public Guid ShippingAddressId { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        //public IEnumerable<OrderItemReadDto> OrderItems { get; set; }
 
         public override void FromEntity(Order entity)
         {
@@ -21,7 +20,6 @@ namespace Ecommerce.Service.src.OrderService
             TotalPrice = entity.TotalPrice;
             ShippingAddressId = entity.ShippingAddressId;
             OrderStatus = entity.OrderStatus;
-            //OrderItems = entity.OrderItems.Select(item => new OrderItemReadDto().FromEntity(item)).ToList();
             base.FromEntity(entity);
         }
     }
@@ -64,7 +62,6 @@ namespace Ecommerce.Service.src.OrderService
             entity.TotalPrice = TotalPrice;
             entity.ShippingAddressId = ShippingAddressId;
             entity.OrderStatus = OrderStatus;
-            //entity.OrderItems = OrderItems.Select(item => item.UpdateEntity(item)).ToList();
             return entity;
         }
     }
