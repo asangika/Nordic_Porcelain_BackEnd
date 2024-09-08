@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Ecommerce.Domain.src.CategoryAggregate;
 using Ecommerce.Domain.src.Entities.OrderAggregate;
-using Ecommerce.Domain.src.Entities.ProductAggregate;
 using Ecommerce.Domain.src.Entities.ReviewAggregate;
 using Ecommerce.Domain.src.Shared;
 
@@ -27,22 +26,15 @@ namespace Ecommerce.Domain.src.ProductAggregate
         [Required]
         public int Stock { get; set; }
 
-        [MaxLength(100)]
-        public string? BrandName { get; set; }
-
-        public virtual ICollection<OrderItem> OrderItems { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
+        [MaxLength(20)]
+        public string? ProductCode { get; set; }
 
         // Navigation property
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual Category? Category { get; set; }
         public virtual IEnumerable<ProductImage>? ProductImages { get; set; }
-        public virtual IEnumerable<ProductSize>? ProductSizes { get; set; }
-        public virtual IEnumerable<ProductColor>? ProductColors { get; set; }
 
-        public Product()
-        {
-
-        }
         public bool IsInStock()
         {
             return Stock > 0;

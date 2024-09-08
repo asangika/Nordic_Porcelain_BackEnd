@@ -2,7 +2,6 @@ using Ecommerce.Domain.src.AddressAggregate;
 using Ecommerce.Domain.src.CategoryAggregate;
 using Ecommerce.Domain.src.Entities.OrderAggregate;
 using Ecommerce.Domain.src.Entities.PaymentAggregate;
-using Ecommerce.Domain.src.Entities.ProductAggregate;
 using Ecommerce.Domain.src.Entities.ReviewAggregate;
 using Ecommerce.Domain.src.Entities.ShipmentAggregate;
 using Ecommerce.Domain.src.Entities.UserAggregate;
@@ -20,9 +19,7 @@ namespace Ecommerce.Infrastructure.src.Database
         public DbSet<UserAddress> UserAddress { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<ProductSize> ProductSizes { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
@@ -87,9 +84,7 @@ namespace Ecommerce.Infrastructure.src.Database
             modelBuilder.Entity<Shipment>().ToTable("Shipments");
             modelBuilder.Entity<Address>().ToTable("Addresses");
             modelBuilder.Entity<UserAddress>().ToTable("UserAddresses");
-            modelBuilder.Entity<ProductColor>().ToTable("ProductColors");
             modelBuilder.Entity<ProductImage>().ToTable("ProductImages");
-            modelBuilder.Entity<ProductSize>().ToTable("ProductSizes");
         }
 
 

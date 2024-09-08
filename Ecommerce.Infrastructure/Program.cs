@@ -12,6 +12,8 @@ using Ecommerce.Service.src.UserService;
 using Newtonsoft.Json.Converters;
 using Microsoft.OpenApi.Models;
 using Ecommerce.Presentation.src.Middleware;
+using Ecommerce.Service.src.CategoryService;
+using Ecommerce.Service.src.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +81,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthManagement, AuthManagement>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserManagement, UserManagement>();
+builder.Services.AddScoped<ICategoryManagement, CategoryManagement>();
+builder.Services.AddScoped<IProductManagement, ProductManagement>();
 
 // Add authentication configuration
 builder.Services.AddAuthentication(
@@ -118,7 +122,7 @@ if (app.Environment.IsDevelopment())
 // Inject middleware to the application
 
 app.UseHttpsRedirection();
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

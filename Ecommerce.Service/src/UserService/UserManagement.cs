@@ -39,7 +39,7 @@ namespace Ecommerce.Service.src.UserService
             var user = await _userRepository.GetUserByEmail(email);
             if (user == null)
             {
-                throw new Exception("User not found");
+                return null;
             }
             var userRead = new UserReadDto();
             userRead.FromEntity(user);
