@@ -25,8 +25,10 @@ namespace Ecommerce.Infrastructure.src.Repository
 
         public async Task<IEnumerable<Product>> SearchProductsByTitleAsync(string title)
         {
+            var lowerCaseTitle = title.ToLower();
+
             return await _context.Products
-                .Where(p => p.Title.Contains(title))
+                .Where(p => p.Title.ToLower().Contains(lowerCaseTitle))
                 .ToListAsync();
         }
 
@@ -37,24 +39,30 @@ namespace Ecommerce.Infrastructure.src.Repository
                 .ToListAsync();
         }
 
-        // public async Task<IEnumerable<Product>> GetTopSellingProductsAsync(int count)
-        // {
-        //     return await _context.Products
-        //         .OrderByDescending(p => p.SalesCount)
-        //         .Take(count)
-        //         .ToListAsync();
-        // }
+        public async Task<IEnumerable<Product>> GetTopSellingProductsAsync(int count)
+        {
+            var topSellingProductIds = await _context.OrderItems
+            .GroupBy(oi => oi.ProductId)
+            .Select(group => new
+            {
+                ProductId = group.Key,
+                SalesCount = group.Select(oi => oi.OrderId).Distinct().Count()
+            })
+            .OrderByDescending(g => g.SalesCount)
+            .Take(count)
+            .Select(g => g.ProductId)
+            .ToListAsync();
+
+            return await _context.Products
+            .Where(p => topSellingProductIds.Contains(p.Id))
+            .ToListAsync();
+        }
 
         public async Task<IEnumerable<Product>> GetInStockProductsAsync()
         {
             return await _context.Products
                 .Where(p => p.Stock > 0)
                 .ToListAsync();
-        }
-
-        public Task<IEnumerable<Product>> GetTopSellingProductsAsync(int count)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()

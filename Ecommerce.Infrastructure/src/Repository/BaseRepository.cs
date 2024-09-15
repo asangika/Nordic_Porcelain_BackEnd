@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Ecommerce.Domain.src.Interface;
 using Ecommerce.Domain.src.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +61,7 @@ namespace Ecommerce.Infrastructure.src.Repository
             var totalEntity = await _dbSet.CountAsync();
             IQueryable<T> query = _dbSet;
             var entities = await query
-                .Skip(paginationOptions.Page)
+                .Skip((paginationOptions.Page - 1) * paginationOptions.PerPage)
                 .Take(paginationOptions.PerPage)
                 .ToListAsync();
 

@@ -67,5 +67,11 @@ namespace Ecommerce.Infrastructure.src.Repository
 
             return await query.CountAsync();
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

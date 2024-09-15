@@ -36,5 +36,10 @@ namespace Ecommerce.Infrastructure.src.Repository
                 .Where(oi => oi.OrderId == orderId)
                 .SumAsync(oi => oi.Quantity);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

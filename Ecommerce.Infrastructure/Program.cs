@@ -14,6 +14,13 @@ using Microsoft.OpenApi.Models;
 using Ecommerce.Presentation.src.Middleware;
 using Ecommerce.Service.src.CategoryService;
 using Ecommerce.Service.src.ProductService;
+using Ecommerce.Service.src.ProductImageService;
+using Ecommerce.Service.src.OrderService;
+using Ecommerce.Service.src.OrderItemService;
+using Ecommerce.Service.src.NotificationService;
+using Ecommerce.Service.src.OrderService.Handlers;
+using Ecommerce.Service.src.AddressService;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +90,16 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserManagement, UserManagement>();
 builder.Services.AddScoped<ICategoryManagement, CategoryManagement>();
 builder.Services.AddScoped<IProductManagement, ProductManagement>();
+builder.Services.AddScoped<IProductImageManagement, ProductImageManagement>();
+builder.Services.AddScoped<IEmailManagement, EmailManagement>();
+builder.Services.AddScoped<ISmsManagement, SmsManagement>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IOrderStatushandler, OrderStatusHandler>();
+builder.Services.AddScoped<IOrderManagement, OrderManagement>();
+builder.Services.AddScoped<IOrderItemManagement, OrderItemManagement>();
+builder.Services.AddScoped<IAddressManagement, AddressManagement>();
+builder.Services.AddScoped<ILogger, Logger<OrderManagement>>();
+
 
 // Add authentication configuration
 builder.Services.AddAuthentication(
