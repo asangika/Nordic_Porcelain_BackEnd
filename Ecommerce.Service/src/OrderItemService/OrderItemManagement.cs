@@ -5,7 +5,7 @@ using Ecommerce.Service.src.Shared;
 
 namespace Ecommerce.Service.src.OrderItemService
 {
-    public class OrderItemManagement : BaseService<OrderItem, OrderItemReadDto, OrderItemCreateDto, OrderItemUpdateDto>
+    public class OrderItemManagement : BaseService<OrderItem, OrderItemReadDto, OrderItemCreateDto, OrderItemUpdateDto>, IOrderItemManagement
     {
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IProductRepository _productRepository;

@@ -10,7 +10,7 @@ namespace Ecommerce.Domain.src.ProductAggregate
         public Guid ProductId { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(1000)]
         public string? ImageURL { get; set; }
 
         [Required]

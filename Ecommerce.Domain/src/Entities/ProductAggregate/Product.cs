@@ -16,7 +16,7 @@ namespace Ecommerce.Domain.src.ProductAggregate
         public Guid CategoryId { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(2000)]
         public string? Description { get; set; }
 
         [Required]

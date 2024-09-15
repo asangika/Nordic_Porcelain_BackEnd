@@ -56,12 +56,12 @@ namespace Ecommerce.Presentation.src.Controllers
             return Ok(products);
         }
 
-        // [HttpGet("top-selling")]
-        // public async Task<IActionResult> GetTopSellingProducts([FromQuery] int count)
-        // {
-        //     var products = await _productManagement.GetTopSellingProductsAsync(count);
-        //     return Ok(products);
-        // }
+        [HttpGet("top-selling")]
+        public async Task<IActionResult> GetTopSellingProducts([FromQuery] int count)
+        {
+            var products = await _productManagement.GetTopSellingProductsAsync(count);
+            return Ok(products);
+        }
 
         [HttpGet("in-stock")]
         public async Task<IActionResult> GetInStockProducts()

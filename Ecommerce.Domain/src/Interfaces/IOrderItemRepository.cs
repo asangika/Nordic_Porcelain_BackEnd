@@ -8,5 +8,6 @@ namespace Ecommerce.Domain.src.Interfaces
         Task<IEnumerable<OrderItem>> GetOrderItemsByOrderIdAsync(Guid orderId);
         Task<IEnumerable<OrderItem>> GetOrderItemsByProductIdAsync(Guid productId);
         Task<int> GetTotalQuantityByOrderIdAsync(Guid orderId);
+        Task SaveChangesAsync();
     }
 }

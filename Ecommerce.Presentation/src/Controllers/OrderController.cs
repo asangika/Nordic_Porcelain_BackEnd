@@ -58,5 +58,18 @@ namespace Ecommerce.Presentation.src.Controllers
             }
         }
 
+        [Authorize(Roles = "User")]
+        public override async Task<ActionResult<OrderReadDto>> CreateAsync(OrderCreateDto entity)
+        {
+            var result = await base.CreateAsync(entity);
+
+            if (result.Result is CreatedAtActionResult createdAtActionResult)
+            {
+                var createdOrder = (OrderReadDto)createdAtActionResult.Value;
+                return CreatedAtAction(nameof(CreateAsync), new { id = createdOrder.OrderId }, createdOrder);
+            }
+            return StatusCode(500, "Error creating the order.");
+        }
+
     }
 }

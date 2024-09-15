@@ -10,6 +10,8 @@ namespace Ecommerce.Service.src.ProductService
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public Guid CategoryId { get; set; }
+        public string ProductCode { get; set; }
+
 
         public override void FromEntity(Product entity)
         {
@@ -19,6 +21,7 @@ namespace Ecommerce.Service.src.ProductService
             Price = entity.Price;
             Stock = entity.Stock;
             CategoryId = entity.CategoryId;
+            ProductCode = entity.ProductCode;
         }
     }
     public class ProductCreateDto : ICreateDto<Product>
@@ -28,6 +31,7 @@ namespace Ecommerce.Service.src.ProductService
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public Guid CategoryId { get; set; }
+        public string ProductCode { get; set; }
         public Product CreateEntity()
         {
             return new Product
@@ -37,6 +41,7 @@ namespace Ecommerce.Service.src.ProductService
                 Price = Price,
                 Stock = Stock,
                 CategoryId = CategoryId,
+                ProductCode = ProductCode,
             };
         }
     }
@@ -48,7 +53,6 @@ namespace Ecommerce.Service.src.ProductService
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public Guid CategoryId { get; set; }
-        public string BrandName { get; set; }
         public Product UpdateEntity(Product entity)
         {
             entity.Title = Title;

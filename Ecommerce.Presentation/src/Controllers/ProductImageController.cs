@@ -35,7 +35,7 @@ namespace Ecommerce.Presentation.src.Controllers
             return await base.DeleteAsync(id);
         }
 
-        [HttpGet("{productId}")]
+        [HttpGet("productImages/{productId}")]
         public async Task<ActionResult<IEnumerable<ProductImageReadDto>>> GetImagesByProductIdAsync(Guid productId)
         {
             try

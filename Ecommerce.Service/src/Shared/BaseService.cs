@@ -30,16 +30,38 @@ namespace Ecommerce.Service.src.Shared
             return await _repo.DeleteByIdAsync(id);
         }
 
+        // public virtual async Task<PaginatedResult<TReadDto>> GetAllAsync(PaginationOptions paginationOptions)
+        // {
+        //     var entities = await _repo.GetAllAsync(paginationOptions);
+        //     var convertedResult = entities.Items.Select(entity =>
+        //     {
+        //         var readDto = Activator.CreateInstance<TReadDto>();
+        //         readDto.FromEntity(entity);
+        //         return readDto;
+        //     });
+
+        //     return new PaginatedResult<TReadDto>
+        //     {
+        //         Items = convertedResult,
+        //         CurrentPage = entities.CurrentPage,
+        //         TotalPages = entities.TotalPages
+        //     };
+        // }
+
         public virtual async Task<PaginatedResult<TReadDto>> GetAllAsync(PaginationOptions paginationOptions)
         {
+            // Fetch entities from the repository with pagination
             var entities = await _repo.GetAllAsync(paginationOptions);
+
+            // Convert each entity to its corresponding ReadDto
             var convertedResult = entities.Items.Select(entity =>
             {
                 var readDto = Activator.CreateInstance<TReadDto>();
-                readDto.FromEntity(entity);
+                readDto.FromEntity(entity); // Ensure TReadDto implements this method
                 return readDto;
             });
 
+            // Return the paginated result with the converted DTOs
             return new PaginatedResult<TReadDto>
             {
                 Items = convertedResult,

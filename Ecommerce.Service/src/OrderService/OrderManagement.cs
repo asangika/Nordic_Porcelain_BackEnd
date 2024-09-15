@@ -4,46 +4,58 @@ using Ecommerce.Domain.src.Interfaces;
 using Ecommerce.Service.src.NotificationService;
 using Ecommerce.Service.src.OrderService.Handlers;
 using Ecommerce.Service.src.Shared;
+using Microsoft.Extensions.Logging;
 
 namespace Ecommerce.Service.src.OrderService
 {
-    public class OrderManagement : BaseService<Order, OrderReadDto, OrderCreateDto, OrderUpdateDto>
+    public class OrderManagement : BaseService<Order, OrderReadDto, OrderCreateDto, OrderUpdateDto>, IOrderManagement
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IOrderItemRepository _orderItemRepository;
         private readonly INotificationService _notificationService;
         private readonly IOrderStatushandler _orderStatusHandler;
+        private readonly ILogger<OrderManagement> _logger;
 
-        public OrderManagement(IOrderRepository orderRepository, IUserRepository userRepository, INotificationService notificationService, IOrderStatushandler orderStatusHandler) : base(orderRepository)
+        public OrderManagement(IOrderRepository orderRepository, IUserRepository userRepository, INotificationService notificationService, IOrderStatushandler orderStatusHandler, IOrderItemRepository orderItemRepository, ILogger<OrderManagement> logger) : base(orderRepository)
         {
             _orderRepository = orderRepository;
             _userRepository = userRepository;
             _notificationService = notificationService;
             _orderStatusHandler = orderStatusHandler;
+            _orderItemRepository = orderItemRepository;
+            _logger = logger;
         }
 
         public async Task<OrderReadDto> CreateAsync(OrderCreateDto createDto)
         {
             try
             {
-                var order = new Order
-                {
-                    UserId = createDto.UserId,
-                    ShippingAddressId = createDto.ShippingAddressId,
-                    OrderDate = DateTime.UtcNow,
-                    OrderStatus = OrderStatus.Pending,
-                    TotalPrice = createDto.TotalPrice
-                };
+                _logger.LogInformation("Creating order with DTO: {@OrderCreateDto}", createDto);
+
+                var order = createDto.CreateEntity();
 
                 await _orderRepository.CreateAsync(order);
+                await _orderRepository.SaveChangesAsync();
+
+                foreach (var item in createDto.OrderItems)
+                {
+                    var orderItem = item.CreateEntity();
+                    await _orderItemRepository.CreateAsync(orderItem);
+                }
+
+                await _orderItemRepository.SaveChangesAsync();
 
                 await _notificationService.NotifyAsync(order.UserId, "Your order has been placed.", NotificationType.Email);
+                _logger.LogInformation("Order created successfully with ID: {OrderId}", order.Id);
 
                 return new OrderReadDto();
+
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("Error Creating Order!.");
+                _logger.LogError(ex, "Error creating the order.Order DTO: {@OrderCreateDto}", createDto);
+                throw new ApplicationException("An error occurred while creating the order.", ex);
             }
 
         }

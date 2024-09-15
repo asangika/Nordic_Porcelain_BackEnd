@@ -7,6 +7,7 @@ namespace Ecommerce.Service.src.OrderService
 {
     public class OrderReadDto : BaseReadDto<Order>
     {
+        public Guid OrderId { get; set; }
         public Guid UserId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
@@ -15,6 +16,7 @@ namespace Ecommerce.Service.src.OrderService
 
         public override void FromEntity(Order entity)
         {
+            OrderId = entity.Id;
             UserId = entity.UserId;
             OrderDate = entity.OrderDate;
             TotalPrice = entity.TotalPrice;
@@ -57,11 +59,10 @@ namespace Ecommerce.Service.src.OrderService
 
         public Order UpdateEntity(Order entity)
         {
-            entity.UserId = UserId;
-            entity.OrderDate = OrderDate;
             entity.TotalPrice = TotalPrice;
             entity.ShippingAddressId = ShippingAddressId;
             entity.OrderStatus = OrderStatus;
+            entity.OrderItems = OrderItems.Select(item => item.UpdateEntity(entity.OrderItems.FirstOrDefault(oi => oi.Id == item.Id))).ToList();
             return entity;
         }
     }
