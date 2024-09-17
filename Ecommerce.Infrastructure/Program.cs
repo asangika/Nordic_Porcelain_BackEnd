@@ -59,6 +59,14 @@ builder.Services.AddSwaggerGen(
     });
     });
 
+// Configure CORS policy to allow requests from your frontend (http://localhost:5173)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontendApp",
+        builder => builder.WithOrigins("http://localhost:5173")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 // Add database context into app
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -139,6 +147,7 @@ if (app.Environment.IsDevelopment())
 // Inject middleware to the application
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontendApp");
 //app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

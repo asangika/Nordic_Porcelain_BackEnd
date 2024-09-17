@@ -69,5 +69,21 @@ namespace Ecommerce.Infrastructure.src.Repository
         {
             return await _context.Products.ToListAsync();
         }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceAscAsync()
+        {
+            return await _context.Products
+                .Where(p => p.Stock > 0)
+                .OrderBy(p => p.Price)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceDescAsync()
+        {
+            return await _context.Products
+                .Where(p => p.Stock > 0)
+                .OrderByDescending(p => p.Price)
+                .ToListAsync();
+        }
     }
 }
