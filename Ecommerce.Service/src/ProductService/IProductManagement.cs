@@ -10,6 +10,8 @@ namespace Ecommerce.Service.src.ProductService
         Task<IEnumerable<ProductReadDto>> GetProductsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
         Task<IEnumerable<ProductReadDto>> GetTopSellingProductsAsync(int count);
         Task<IEnumerable<Product>> GetInStockProductsAsync();
+        Task<IEnumerable<Product>> GetProductsByPriceAscAsync();
+        Task<IEnumerable<Product>> GetProductsByPriceDescAsync();
 
     }
 }

@@ -127,5 +127,31 @@ namespace Ecommerce.Service.src.ProductService
                 throw new Exception("Error Retrieving Stock count!.");
             }
         }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceAscAsync()
+        {
+            try
+            {
+                return await _productRepository.GetProductsByPriceAscAsync();
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error Retrieving Products!.");
+            }
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceDescAsync()
+        {
+            try
+            {
+                return await _productRepository.GetProductsByPriceDescAsync();
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error Retrieving Products!.");
+            }
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace Ecommerce.Domain.src.Interfaces
         Task<IEnumerable<Product>> GetProductsByPriceRangeAsync(decimal minPrice, decimal maxPrice);
         Task<IEnumerable<Product>> GetTopSellingProductsAsync(int count);
         Task<IEnumerable<Product>> GetInStockProductsAsync();
+        Task<IEnumerable<Product>> GetProductsByPriceAscAsync();
+        Task<IEnumerable<Product>> GetProductsByPriceDescAsync();
     }
 }

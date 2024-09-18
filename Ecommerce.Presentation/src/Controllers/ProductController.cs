@@ -70,5 +70,20 @@ namespace Ecommerce.Presentation.src.Controllers
             return Ok(products);
         }
 
+        [HttpGet("price/low-high")]
+        public async Task<IActionResult> GetProductsByPriceAsc()
+        {
+            var products = await _productManagement.GetProductsByPriceAscAsync();
+            return Ok(products);
+        }
+
+
+        [HttpGet("price/high-low")]
+        public async Task<IActionResult> GetProductsByPriceDesc()
+        {
+            var products = await _productManagement.GetProductsByPriceDescAsync();
+            return Ok(products);
+        }
+
     }
 }
