@@ -20,7 +20,7 @@ namespace Ecommerce.Presentation.src.Controllers
             _userManagement = userManagement;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public override async Task<ActionResult<UserReadDto>> GetByIdAsync(Guid id)
         {
             return await base.GetByIdAsync(id);
